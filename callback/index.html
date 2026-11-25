@@ -1,0 +1,22 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>Tesla OAuth callback</title>
+<style>body{font-family:system-ui;max-width:680px;margin:40px auto;line-height:1.7}code{background:#f4f4f4;padding:2px 6px;border-radius:4px;word-break:break-all}</style>
+</head>
+<body>
+<h2>授权回调</h2>
+<p id="msg">读取中…</p>
+<p>授权码：</p>
+<p><code id="code">—</code></p>
+<p>复制上面这串，执行：</p>
+<p><code>python scripts/03_oauth.py --code &lt;授权码&gt;</code></p>
+<script>
+const p = new URLSearchParams(location.search);
+const code = p.get('code');
+const err = p.get('error');
+const state = p.get('state');
+document.getElementById('code').textContent = code || '—';
+document.getElementById('msg').textContent = err ? ('失败：' + err) : (code ? '已拿到授权码' : '没有 code 参数，可能已使用过或链接错误');
+if (state) document.getElementById('msg').textContent += '（state=' + state + '）';
+</script>
+</body></html>
